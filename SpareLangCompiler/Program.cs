@@ -1,4 +1,6 @@
-﻿string sourceCode =
+﻿using SpareLangCompiler;
+
+string sourceCode =
     """
     [0] = inl
     marker 67
@@ -12,21 +14,26 @@ string[] code = sourceCode.Trim('\t').Trim(' ').Split('\n');
 //          КОМПИЛЯЦИЯ МАРКЕРОВ
 //
 
-List<Marker> markers = [];
-for (int i = 0; i < code.Length; i++)
-{
-    string[] tokens = code[i].Split();
+List<Marker> markers = MarkerCompiler.GetMarkers(code);
 
-    if (tokens[0] == "marker")
-    {
-        Marker marker = new Marker(ConvertService.ParseToObject(tokens[1]), i);
-        if (!markers.Contains(marker)) markers.Add(marker);
-    }
-}
 foreach (Marker marker in markers) Console.WriteLine(marker.ToString());
 
 //
 //          ИНТЕРПРЕТАЦИЯ КОДА
 //
 
-//...
+int i = 0;
+
+while(i < code.Length)
+{
+    string[] tokens = code[i].Split();
+
+    switch (tokens[0])
+    {
+        case "marker": break;
+        case "out": Console.Write(ConvertService.ParseToObject(tokens[1])); break;
+        case "outl": Console.WriteLine(ConvertService.ParseToObject(tokens[1])); break;
+    }
+
+    i++;
+}

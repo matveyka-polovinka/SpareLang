@@ -1,6 +1,6 @@
 ﻿namespace SpareLangCompiler
 {
-    internal class Memory
+    internal class RuntimeMemory
     {
         private List<Variable> variables = [];
         internal Variable this[int index]
