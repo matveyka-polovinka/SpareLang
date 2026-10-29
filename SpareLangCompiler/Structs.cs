@@ -1,6 +1,6 @@
-﻿internal struct Variable(ushort id, object v)
+﻿internal struct Variable(int id, object v)
 {
-    internal ushort ID = id;
+    internal int ID = id;
     internal object Value = v;
 }
 internal struct Marker(object t, int p)
