@@ -2,10 +2,8 @@
 
 string sourceCode =
     """
-    [0] = inl
-    marker 67
+    [0] = 5
     outl [0]
-    goto 67 : [0] == 67
     """;
 
 string[] code = sourceCode.Trim('\t').Trim(' ').Split('\n');
@@ -43,7 +41,7 @@ while (i < code.Length)
         default:
             var t = tokens[0];
 
-            if (t[0] == '[' && t[t.Length - 1] == ']')
+            if (t[0] == '[' && t[^1] == ']')
             {
                 int index = (int)ParseService.ParseToObject(t);
 
@@ -52,7 +50,7 @@ while (i < code.Length)
                 v.Value = tokens.Length == 5 ?
                     ParseService.ParseSetVar(tokens)
                     :
-                    ParseService.ParseToObject(tokens[1]);
+                    ParseService.ParseToObject(tokens[2]);
 
                 memory[index] = v;
             }
