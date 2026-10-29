@@ -26,7 +26,7 @@
                 return Memory[index];
             }
 
-            throw new Exception();
+            throw new Invalid_Type_Exception();
         }
 
         private static readonly Dictionary<string, Oper> TokenToOper = new()
@@ -35,7 +35,14 @@
         };
         internal static object ParseSetVar(string[] tokens)
         {
-            if (tokens[2])
+            if (TokenToOper.TryGetValue(tokens[3], out var f))
+                return f
+                (
+                    ParseToObject(tokens[2]),
+                    ParseToObject(tokens[4])
+                );
+
+            throw new Invalid_Operation_Exception();
         }
     }
     delegate object Oper(object a, object b);

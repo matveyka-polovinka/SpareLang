@@ -49,7 +49,10 @@ while (i < code.Length)
 
                 Variable v = memory[index];
 
-                v.Value = ParseService.ParseToObject(tokens[1]);
+                v.Value = tokens.Length == 5 ?
+                    ParseService.ParseSetVar(tokens)
+                    :
+                    ParseService.ParseToObject(tokens[1]);
 
                 memory[index] = v;
             }
