@@ -11,10 +11,11 @@
 
                 if (tokens[0] == "marker")
                 {
-                    Marker marker = new Marker(ConvertService.ParseToObject(tokens[1]), i);
+                    Marker marker = new Marker(ParseService.ParseToObject(tokens[1]), i);
                     if (!markers.Contains(marker)) markers.Add(marker);
                 }
             }
+            return markers;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace SpareLangCompiler
 {
-    internal static class ConvertService
+    internal static class ParseService
     {
         internal static RuntimeMemory Memory { set; private get; } = new();
         internal static object ParseToObject(string ob)
@@ -28,5 +28,15 @@
 
             throw new Exception();
         }
+
+        private static readonly Dictionary<string, Oper> TokenToOper = new()
+        {
+            {"+", OperService.Add}
+        };
+        internal static object ParseSetVar(string[] tokens)
+        {
+            if (tokens[2])
+        }
     }
+    delegate object Oper(object a, object b);
 }
