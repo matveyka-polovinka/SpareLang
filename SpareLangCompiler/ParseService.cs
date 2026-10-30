@@ -33,7 +33,12 @@ namespace SpareLangCompiler
 
         private static readonly Dictionary<string, Oper> TokenToOper = new()
         {
-            {"+", OperService.Add}
+            {"+", OperService.Add},
+            {"-", OperService.Substract},
+            {"*", OperService.Multiply},
+            {"/", OperService.Divide},
+            {"//", OperService.IntegerDivide},
+            {"%", OperService.DivideRemain},
         };
         internal static object ParseSetVar(string[] tokens)
         {

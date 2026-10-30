@@ -2,8 +2,10 @@
 
 string sourceCode =
     """
-    [0] = 5
-    outl [0]
+    [0] = 5 + 2
+    [1] = [0] + 4
+    [2] = [1] / 3
+    outl [2]
     """;
 
 string[] code = sourceCode.Trim('\t').Trim(' ').Split('\n');
@@ -27,7 +29,7 @@ int i = 0;
 
 while (i < code.Length)
 {
-    string[] tokens = code[i].Split();
+    string[] tokens = code[i].Split(' ');
 
     switch (tokens[0])
     {
