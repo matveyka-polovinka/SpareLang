@@ -23,7 +23,10 @@ namespace SpareLangCompiler
                 for (int i = startindex+1; i < tokens.Length; i++)
                 {
                     rstr += " " + tokens[i];
-                    if (tokens[i].EndsWith('\"')) rstr.TrimEnd('\"');
+
+                    if (tokens[i] == "\"") return rstr + " ";
+
+                    if (tokens[i].EndsWith('\"')) return rstr.TrimEnd('\"');
                 }
 
                 return rstr;
@@ -37,6 +40,8 @@ namespace SpareLangCompiler
                 int index = int.Parse(ob[1..^1].Trim(), CultureInfo.InvariantCulture);
                 return Memory[index].Value;
             }
+
+            if (ob == "inl") return ParseToObject([Console.ReadLine()??""], 0);
 
             throw new Invalid_Type_Exception(ob);
         }

@@ -2,7 +2,8 @@
 
 string sourceCode =
     """
-    outl "Hello world!"
+    [0] = "Hello world!"
+    outl [0]
     """;
 
 string[] code = sourceCode.Trim('\t').Trim(' ').Split('\n');
