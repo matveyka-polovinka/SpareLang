@@ -2,10 +2,7 @@
 
 string sourceCode =
     """
-    [0] = 5 + 2
-    [1] = [0] + 4
-    [2] = [1] / 3
-    outl [2]
+    outl "Hello world!"
     """;
 
 string[] code = sourceCode.Trim('\t').Trim(' ').Split('\n');
@@ -16,7 +13,7 @@ string[] code = sourceCode.Trim('\t').Trim(' ').Split('\n');
 
 List<Marker> markers = MarkerCompiler.GetMarkers(code);
 
-foreach (Marker marker in markers) Console.WriteLine(marker.ToString());
+//foreach (Marker marker in markers) Console.WriteLine(marker.ToString());
 
 //
 //          ИНТЕРПРЕТАЦИЯ КОДА
@@ -35,24 +32,24 @@ while (i < code.Length)
     {
         case "marker": break;
 
-        case "out": Console.Write(ParseService.ParseToObject(tokens[1])); break;
-        case "outl": Console.WriteLine(ParseService.ParseToObject(tokens[1])); break;
+        case "out": Console.Write(ParseService.ParseToObject(tokens, 1)); break;
+        case "outl": Console.WriteLine(ParseService.ParseToObject(tokens, 1)); break;
 
         case "goto": i = markers.Where(m => 1 == 1).ToList()[0].Position + 1; break;
 
         default:
-            var t = tokens[0];
+            string t = tokens[0];
 
             if (t[0] == '[' && t[^1] == ']')
             {
-                int index = (int)ParseService.ParseToObject(t);
+                int index = (int)ParseService.ParseToObject(tokens, 0);
 
                 Variable v = memory[index];
 
                 v.Value = tokens.Length == 5 ?
                     ParseService.ParseSetVar(tokens)
                     :
-                    ParseService.ParseToObject(tokens[2]);
+                    ParseService.ParseToObject(tokens, 2);
 
                 memory[index] = v;
             }

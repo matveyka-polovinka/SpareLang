@@ -5,18 +5,26 @@ namespace SpareLangCompiler
     internal static class ParseService
     {
         internal static RuntimeMemory Memory { set; private get; } = new();
-        internal static object ParseToObject(string ob)
+        internal static object ParseToObject(string[] tokens, int startindex = 2)
         {
+            string ob = tokens[startindex];
+
             if (int.TryParse(ob, out var rint)) return rint;
 
             if (bool.TryParse(ob, out var rbool)) return rbool;
 
-            if (ob[0] == ob[^1] && ob[0] == '"')
+            if (ob[0] == '\"')
             {
-                List<char> chars = ob.ToList();
-                chars.RemoveAt(0);
-                chars.RemoveAt(chars.Count - 1);
-                return chars.ToArray().ToString() ?? "";
+                string rstr = ob;
+                rstr.TrimStart('\"');
+
+                for (int i = startindex; i < tokens.Length; i++)
+                {
+                    rstr += tokens[i];
+                    if (tokens[i].EndsWith('\"')) rstr.TrimEnd('\"');
+                }
+
+                return rstr;
             }
 
             if (ob[0] == '[' && ob[^1] == ']')
@@ -28,7 +36,7 @@ namespace SpareLangCompiler
                 return Memory[index].Value;
             }
 
-            throw new Invalid_Type_Exception();
+            throw new Invalid_Type_Exception(ob);
         }
 
         private static readonly Dictionary<string, Oper> TokenToOper = new()
@@ -45,8 +53,8 @@ namespace SpareLangCompiler
             if (TokenToOper.TryGetValue(tokens[3], out var f))
                 return f
                 (
-                    ParseToObject(tokens[2]),
-                    ParseToObject(tokens[4])
+                    ParseToObject(tokens, 2),
+                    ParseToObject(tokens, 4)
                 );
 
             throw new Invalid_Operation_Exception();
