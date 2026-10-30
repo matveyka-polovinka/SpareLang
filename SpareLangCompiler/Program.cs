@@ -1,4 +1,6 @@
-﻿string sourceCode =
+﻿using SpareLangCompiler;
+
+string sourceCode =
     """
     [0] = inl
     marker 67
