@@ -1,4 +1,4 @@
-﻿internal static class ConvertService
+﻿internal static class LineToListCode
 {
     internal static object ParseToObject(string ob)
     {

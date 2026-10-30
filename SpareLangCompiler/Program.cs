@@ -19,7 +19,7 @@ for (int i = 0; i < code.Length; i++)
 
     if (tokens[0] == "marker")
     {
-        Marker marker = new Marker(ConvertService.ParseToObject(tokens[1]), i);
+        Marker marker = new Marker(LineToListCode.ParseToObject(tokens[1]), i);
         if (!markers.Contains(marker)) markers.Add(marker);
     }
 }
