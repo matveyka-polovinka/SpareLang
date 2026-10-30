@@ -5,7 +5,7 @@ namespace SpareLangCompiler
     internal static class ParseService
     {
         internal static RuntimeMemory Memory { set; private get; } = new();
-        internal static object ParseToObject(string[] tokens, int startindex = 2)
+        internal static object ParseToObject(string[] tokens, int startindex)
         {
             string ob = tokens[startindex];
 
@@ -18,9 +18,11 @@ namespace SpareLangCompiler
                 string rstr = ob;
                 rstr.TrimStart('\"');
 
-                for (int i = startindex; i < tokens.Length; i++)
+                if (tokens.Length == startindex + 1) return rstr.TrimEnd('\"');
+
+                for (int i = startindex+1; i < tokens.Length; i++)
                 {
-                    rstr += tokens[i];
+                    rstr += " " + tokens[i];
                     if (tokens[i].EndsWith('\"')) rstr.TrimEnd('\"');
                 }
 
